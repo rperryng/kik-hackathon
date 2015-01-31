@@ -7,7 +7,6 @@ var paths = {
   source: {
     scripts: [
       './client/src/app/app.module.js',
-      './client/src/app/**/*.js',
       './client/src/app/*.js',
     ],
     styles: [
@@ -25,6 +24,7 @@ gulp.task('scripts', function () {
   del(paths.build.scripts, function () {
     return gulp.src(paths.source.scripts)
       .pipe(plugins.concat('app.js'))
+      .pipe(plugins.ngAnnotate())
       .pipe(gulp.dest(paths.build.root))
       .pipe(plugins.uglify({
 

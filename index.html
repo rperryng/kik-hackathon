@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <div class="app-page" data-page="home">
+  <div class="app-page" data-page="home" ng-app="phonyKik" ng-controller="MainController as main">
     <div id="topbar" class="app-topbar">
       <div class="app-title">
         <i class="fa fa-arrow-left"></i>
@@ -25,20 +25,19 @@
     </div>
     <div class="app-content">
       <div class="chatContainer">
-        <div class="message">
-          <div class="message-bubble message-bubble-sent">Hey PPPP, I really want to eat a pizza. Can you help a brother out?</div>
-        </div>
-        <div class="message">
-          <div class="message-pictureReceived"></div>
-          <div class="message-bubble message-bubble-received">Hello there! I can order pizza for you. If you require a list of instructions just ask (type -h for list of instructions)</div>
+        <div class="message-container" ng-repeat="message in main.messages">
+          <div class="message-pictureReceived" ng-show="message.direction === 'inbound'"></div>
+          <div class="message-bubble message-bubble-sent" ng-class="message.direction === 'outbound' ? 'message-bubble-sent' : 'message-bubble-received'">
+            {{message.message}}
+          </div>
         </div>
       </div>
-        <div id="inputcontainer">
-          <i class="fa fa-plus"></i>
-          <input id="inputBar" class="app-input" placeholder="Type a message...">
-          <i class="fa fa-smile-o"></i>
-          <i class="fa fa-paper-plane-o"></i>
-        </div>
+      <div id="inputcontainer">
+        <i class="fa fa-plus"></i>
+        <input id="inputBar" class="app-input" placeholder="Type a message...">
+        <i class="fa fa-smile-o"></i>
+        <i class="fa fa-paper-plane-o"></i>
+      </div>
     </div>
   </div>
 

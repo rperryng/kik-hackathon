@@ -20,7 +20,7 @@
   bottom: 0;
   left: 0;
   position: fixed;
-  width: 100%;
+  width: 100%;  
 }
 #inputBar {
   float: left;
@@ -37,9 +37,12 @@
   top: 0;
 }
 .message {
-  margin-top: 15px;
-  position: relative;
-  width: 100%;
+  &-container {
+    margin-top: 15px;
+    position: relative;
+    width: 100%;
+    padding: 0 10px;
+  }
   &-bubble {
     border-radius: 10px;
     max-width: 60%;
@@ -65,7 +68,7 @@
     border-radius: 50%;
     display: inline-block;
     height: 40px;
-    margin: 0 10px 0 7px;
+    margin-right: 5px;
     width: 40px;
     vertical-align: middle;
   }
