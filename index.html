@@ -11,18 +11,23 @@
                                   minimal-ui">
 
   <link rel="stylesheet" href="//cdn.kik.com/app/2.0.1/app.min.css">
+  <link rel="stylesheet" href="/resources/theme.css">
 </head>
 
 <body>
   <div class="app-page" data-page="home">
     <div class="app-topbar"></div>
     <div class="app-content">
-      <div class="app-button">Test button</div>
+      <div id="messages"></div>
+      <input id="inputBar" class="app-input">
     </div>
   </div>
 
+  <!-- libraries -->
   <script type="text/javascript" src="//zeptojs.com/zepto.min.js"></script>
   <script type="text/javascript" src="//cdn.kik.com/app/2.0.1/app.min.js"></script>
+  <script type="text/javascript" src="/bower/angular/angular.js"></script>
+
   <script type="text/javascript" src="/resources/app.js"></script>
 </body>
 
