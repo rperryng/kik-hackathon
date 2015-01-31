@@ -34,9 +34,10 @@
       </div>
       <div id="inputcontainer">
         <i class="fa fa-plus"></i>
-        <input id="inputBar" class="app-input" placeholder="Type a message...">
+        <input id="inputBar" class="app-input" placeholder="Type a message..." ng-model="inputText" ng-init="inputText = ''">
         <i class="fa fa-smile-o"></i>
-        <i class="fa fa-paper-plane-o"></i>
+        <i class="fa fa-paper-plane u-colorBlue" ng-show="inputText.length > 0" ng-click="main.sendMessage(inputText)"></i>
+        <i class="fa fa-paper-plane-o" ng-show="inputText.length === 0" disabled></i>
       </div>
     </div>
   </div>

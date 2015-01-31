@@ -10,6 +10,7 @@
     var vm = this;
 
     vm.messages = [];
+    vm.sendMessage = sendMessage;
 
     activate();
 
@@ -20,6 +21,16 @@
       fakeMessages.forEach(function (message) {
         vm.messages.push(message);
       });
+    }
+
+    function sendMessage(message) {
+      // http ...
+      vm.messages.push({
+        direction: 'outbound',
+        message: message
+      });
+
+      vm.inputText = '';
     }
   }
 })();

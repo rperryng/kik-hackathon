@@ -8,25 +8,27 @@
   background-color: white;
   border-bottom: 1px solid grey;
   color: black;
+  & .app-title {
+    text-align: left;
+  }
 }
 .titleText {
+  display: inline-block;
   font-size: 1em;
   font-weight: 500;
   text-align: left;
-  margin-left: 55px;
+  margin-left: 20px;
 }
 #inputcontainer {
   border-top: 1px solid #BDBDBD;
   bottom: 0;
+  display: table;
   left: 0;
   position: fixed;
-  width: 100%;  
-}
-#inputBar {
-  float: left;
-  margin: 0 auto;
-  position: relative;
-  width: 70%;
+  width: 100%;
+  &>* {
+    display: table-cell;
+  }
 }
 .chatContainer {
   background-color: white;
@@ -76,18 +78,21 @@
 .fa {
   background-color: white;
   color: grey;
-  float: left;
-  height: 43px;
+  height: 44px;
   padding: 10px;
   position: relative;
   text-align: center;
-  width: 9%;
+  width: 44px;
 }
 .fa.fa-plus,
 .fa.fa-smile-o,
+.fa.fa-paper-plane,
 .fa.fa-paper-plane-o {
   font-size: 20px;
 }
-.fa.fa-paper-plane-o {
+.u-colorBlue {
   color: blue;
+}
+.u-colorGray {
+  color: gray;
 }
