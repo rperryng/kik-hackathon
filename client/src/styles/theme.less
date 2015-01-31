@@ -1,7 +1,64 @@
-#inputBar {
-  border: 1px solid red;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.app-topbar {
+  background-color: white;
+  text-align: center;
+  color: black;
+}
+
+.titleText {
+  font-size: 1em;
+  font-weight: 400;
+  text-align: left;
+  margin-left: 55px;
+}
+
+#inputcontainer {
+  position: fixed;
   bottom: 0;
   left: 0;
-  position: fixed;
-  width: 100%; 
+  width: 100%;
+  border-top: 1px solid #BDBDBD;
+}
+
+#inputBar {
+  position: relative;
+  margin: 0 auto;
+  float: left;
+  width: 70%;
+}
+
+.fa {
+  background-color: white;
+  position: relative;
+  text-align: center;
+  height: 43px;
+  width: 9%;
+  float: left;
+  padding: 10px;
+  color: grey;
+}
+
+.fa.fa-plus,
+.fa.fa-smile-o,
+.fa.fa-paper-plane-o {
+  font-size: 20px;
+}
+
+.fa.fa-paper-plane-o {
+  color: blue;
+}
+
+.chat {
+  position: absolute;
+  background-color: white;
+  top: 0;
+  bottom: 44px;
+  right: 0;
+  left: 0;
 }
