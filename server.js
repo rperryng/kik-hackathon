@@ -6,6 +6,7 @@ var app = express();
 
 app.use('/resources', express.static(__dirname + '/client/dist'));
 app.use('/bower', express.static(__dirname + '/bower_components'));
+app.use('/images', express.static(__dirname + '/client/images'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
