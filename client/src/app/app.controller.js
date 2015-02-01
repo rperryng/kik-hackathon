@@ -38,7 +38,6 @@
     }
 
     function onMessagesChanged() {
-      console.log('wuddup change');
       $timeout(function () {
         chatContainer.scrollTop = chatContainer.scrollHeight;
       });
@@ -46,7 +45,7 @@
 
     function onKeyDown($event) {
 
-      // if enter key code
+      // if enter pressed
       if ($event.keyCode === 13) {
         sendMessage();
       }

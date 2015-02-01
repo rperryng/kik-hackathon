@@ -27,7 +27,7 @@
       <div id="chatContainer">
         <div class="message-container" ng-repeat="message in main.messages">
           <div class="message-pictureReceived" ng-show="message.direction === 'inbound'"></div>
-          <div class="message-bubble message-bubble-sent" ng-class="message.direction === 'outbound' ? 'message-bubble-sent' : 'message-bubble-received'">
+          <div class="message-bubble" ng-class="message.direction === 'outbound' ? 'message-bubble-sent' : 'message-bubble-received'">
             {{message.message}}
           </div>
         </div>
