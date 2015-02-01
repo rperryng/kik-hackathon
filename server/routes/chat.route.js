@@ -7,7 +7,6 @@ chatApp.post('/chat', function (req, res, next) {
   var message = req.body;
   var replyString;
 
-  console.log(req.session);
   if (req.session.state === undefined) {
     req.session.state = 0;
     req.session.pizzas = [];

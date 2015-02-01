@@ -10,38 +10,54 @@
     var vm = this;
 
     vm.messages = [];
+    vm.botIsTyping = false;
     vm.sendMessage = sendMessage;
     vm.onKeyDown = onKeyDown;
 
     var chatContainer = $document[0].getElementById('chatContainer');
 
+    var DELAY_TIME = 800;
+
     ////////////////////
+
+    function updateMessages(message) {
+      vm.messages.push(message);
+
+      function onMessagesChanged() {
+        $timeout(function () {
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+        }, 100);
+      }
+    }
 
     function sendMessage() {
       var message = vm.inputText;
 
       // http ...
-      vm.messages.push({
+      updateMessages({
         direction: 'outbound',
         message: message
       });
-      onMessagesChanged();
 
       phonyKikFactory.sendMessage(message)
         .then(function (response) {
-          vm.messages.push({
-            message: response.data.body,
-            direction: 'inbound'
-          });
+          $timeout(pretendBotIsTyping, DELAY_TIME);
+
+          function pretendBotIsTyping() {
+            vm.botIsTyping = true;
+            $timeout(printMessage, DELAY_TIME);
+          }
+
+          function printMessage() {
+            vm.botIsTyping = false;
+            updateMessages({
+              message: response.data.body,
+              direction: 'inbound'
+            });
+          }
         });
 
       vm.inputText = '';
-    }
-
-    function onMessagesChanged() {
-      $timeout(function () {
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-      }, 100);
     }
 
     function onKeyDown($event) {
