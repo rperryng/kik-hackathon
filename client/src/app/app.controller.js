@@ -23,11 +23,9 @@
     function updateMessages(message) {
       vm.messages.push(message);
 
-      function onMessagesChanged() {
-        $timeout(function () {
-          chatContainer.scrollTop = chatContainer.scrollHeight;
-        }, 100);
-      }
+      $timeout(function () {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }, 100);
     }
 
     function sendMessage() {
@@ -63,7 +61,7 @@
     function onKeyDown($event) {
 
       // if enter pressed
-      if ($event.keyCode === 13) {
+      if ($event.keyCode === 13 && vm.inputText.length > 0) {
         sendMessage();
       }
     }

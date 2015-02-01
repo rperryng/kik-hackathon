@@ -4,5 +4,7 @@
   // Kik app dependency
   App.load('home');
 
-  angular.module('phonyKik', []);
+  angular.module('phonyKik', [
+    'ngAnimate'
+  ]);
 })();
