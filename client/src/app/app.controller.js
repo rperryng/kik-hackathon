@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /* @ngInject */
-  function MainController($scope, $element, $document, $timeout, fakeMessages) {
+  function MainController($scope, $element, $document, $timeout, phonyKikFactory) {
     var vm = this;
 
     vm.messages = [];
@@ -15,24 +15,25 @@
 
     var chatContainer = $document[0].getElementById('chatContainer');
 
-    activate();
-
     ////////////////////
 
-    // use hardcoded messages for now.
-    function activate() {
-      fakeMessages.forEach(function (message) {
-        vm.messages.push(message);
-      });
-    }
-
     function sendMessage() {
+      var message = vm.inputText;
+
       // http ...
       vm.messages.push({
         direction: 'outbound',
-        message: vm.inputText
+        message: message
       });
       onMessagesChanged();
+
+      phonyKikFactory.sendMessage(message)
+        .then(function (response) {
+          vm.messages.push({
+            message: response.data.body,
+            direction: 'inbound'
+          });
+        });
 
       vm.inputText = '';
     }
@@ -40,7 +41,7 @@
     function onMessagesChanged() {
       $timeout(function () {
         chatContainer.scrollTop = chatContainer.scrollHeight;
-      });
+      }, 100);
     }
 
     function onKeyDown($event) {

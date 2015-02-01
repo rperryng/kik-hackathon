@@ -7,16 +7,20 @@
 
   /* @ngInject */
   function phonyKikFactory($http) {
+
     var factory = {
-      api: api
+      sendMessage: sendMessage
     };
 
     return factory;
 
     ////////////////////
 
-    function sendMessage() {
-      
+    function sendMessage(message) {
+      return $http.post('/api/chat', {
+        body: message,
+        from: 'rperryng'
+      });
     }
   }
 })();
