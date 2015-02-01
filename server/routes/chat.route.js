@@ -7,10 +7,10 @@ chatApp.post('/chat', function (req, res, next) {
   var message = req.body;
   var replyString;
 
-  if (req.session.state === undefined) {
+  if (req.session === undefined || req.session.state === undefined) {
     req.session.state = 0;
     req.session.pizzas = [];
-  } else if (req.session.state == 99) {
+  } else if (req.session.state == 99 || req.session.state == 10) {
     session.destroy();
   } else {
     if (!robot(message.body, req.session)) {

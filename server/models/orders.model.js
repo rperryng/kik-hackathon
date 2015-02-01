@@ -5,7 +5,6 @@ var Schema = mongoose.Schema;
 var orderSchema = new Schema({
 
   kikUsername: String,
-  fullName: String,
   orderType: Number,
   pizzas: [{
     size: String,
@@ -25,4 +24,11 @@ var orderSchema = new Schema({
   
 });
 
+orderSchema.statics.create = function (body, callback) {
+  var order = new this(body);
+  order.save(callback);
+  return this;
+};
+
+// registered under 'orders' collection in db
 module.exports = mongoose.model('Order', orderSchema);

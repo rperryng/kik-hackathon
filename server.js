@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // connect to the mongodb 
-mongoose.connect('mongodb://localhost:27017/pizza_bot');
+//mongoose.connect('mongodb://localhost:27017/pizza_bot');
 // initialize session storage
 app.use(session({
   secret: config.session.secret,

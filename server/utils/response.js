@@ -8,21 +8,38 @@ module.exports =  {
     } else if (session.state == 5) {
       // get orders
     } else if (session.state == 9) {
-      // summary of order
+      var strings =responses[session.state].split('_');
+      return strings[0] + '\n'
+        + "Type: " + (session.orderType - 1 ? "Delivery": "Pickup")  + '.\n'
+        + "Pizzas: " + '\n'
+        + listPizzas(session)
+        + listAddress(session)
+        + strings[1];
     }
     return responses[session.state];
   }
 }; 
 
+function listPizzas (session) {
+  var pizzaList = "";
+  for ( var i = 0; i < session.pizzas.length; i++){
+    pizzaList += i+1 +" " + session.pizzas[i].size + " (" + session.pizzas[i].toppings.join(', ') + ").\n"
+  }
+  return pizzaList;
+}
+
+function listAddress (session) {
+  return (session.orderType == 2) ? "Address: " + session.address + '.\n': "";
+}
+
 var responses = [
   // State 0
   "Hey there! I'm the Pixel Perfect Pizzabot!\n"
-  + "To order a new pizza, reply with 'new'\n"
-  + "To place a previous order, reply with 'previous'.",
+  + "You can create a new order, or see a list of your previous orders!",
   // State 1
   "Awesome! How many pizzas would you like?",
   // State 2
-  "What size do you want for pizza _? (small|medium|large)",
+  "What size do you want for pizza _?",
   // State 3
   "Would you like a cheese, pepperoni, hawaiian or custom pizza for pizza _?",
   // State 4
@@ -30,7 +47,7 @@ var responses = [
   // State 5
   "Here is a list of your past 3 orders ",
   // State 6
-  "Reply 'pickup' to pick up in store or 'delivery' if you want the pizza delivered to you!",
+  "Do you want to pickup the pizza or have it delivered?",
   // State 7
   "Reply with the full address you would like the pizza delivered to :)",
   // State 8
@@ -40,5 +57,4 @@ var responses = [
   "Here's the order I've prepared for you! _\nShould I place the order?",
   // State 10
   "Awesome! Master pizza makers are now in the process of making you the perfect pizza!\n"
-  + "Your order confirmation number is _."
 ];
