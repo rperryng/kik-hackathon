@@ -6,11 +6,14 @@
     .controller('MainController', MainController);
 
   /* @ngInject */
-  function MainController(fakeMessages) {
+  function MainController($scope, $element, $document, $timeout, fakeMessages) {
     var vm = this;
 
     vm.messages = [];
     vm.sendMessage = sendMessage;
+    vm.onKeyDown = onKeyDown;
+
+    var chatContainer = $document[0].getElementById('chatContainer');
 
     activate();
 
@@ -23,15 +26,30 @@
       });
     }
 
-    function sendMessage(message) {
+    function sendMessage() {
       // http ...
       vm.messages.push({
         direction: 'outbound',
-        message: message
+        message: vm.inputText
       });
+      onMessagesChanged();
 
       vm.inputText = '';
     }
+
+    function onMessagesChanged() {
+      console.log('wuddup change');
+      $timeout(function () {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      });
+    }
+
+    function onKeyDown($event) {
+
+      // if enter key code
+      if ($event.keyCode === 13) {
+        sendMessage();
+      }
+    }
   }
 })();
-    

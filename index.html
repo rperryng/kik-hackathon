@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="app-content">
-      <div class="chatContainer">
+      <div id="chatContainer">
         <div class="message-container" ng-repeat="message in main.messages">
           <div class="message-pictureReceived" ng-show="message.direction === 'inbound'"></div>
           <div class="message-bubble message-bubble-sent" ng-class="message.direction === 'outbound' ? 'message-bubble-sent' : 'message-bubble-received'">
@@ -32,12 +32,12 @@
           </div>
         </div>
       </div>
-      <div id="inputcontainer">
+      <div id="inputContainer">
         <i class="fa fa-plus"></i>
-        <input id="inputBar" class="app-input" placeholder="Type a message..." ng-model="inputText" ng-init="inputText = ''">
+        <input id="inputBar" class="app-input" placeholder="Type a message..." ng-model="main.inputText" ng-init="main.inputText = ''" ng-keydown="main.onKeyDown($event)">
         <i class="fa fa-smile-o"></i>
-        <i class="fa fa-paper-plane u-colorBlue" ng-show="inputText.length > 0" ng-click="main.sendMessage(inputText)"></i>
-        <i class="fa fa-paper-plane-o" ng-show="inputText.length === 0" disabled></i>
+        <i class="fa fa-paper-plane u-colorBlue" ng-show="main.inputText.length > 0" ng-click="main.sendMessage(main.inputText)"></i>
+        <i class="fa fa-paper-plane-o" ng-show="main.inputText.length === 0" disabled></i>
       </div>
     </div>
   </div>

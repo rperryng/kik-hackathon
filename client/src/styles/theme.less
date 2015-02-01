@@ -4,6 +4,9 @@
   box-sizing: border-box;
   margin: 0px;
 }
+.app-content {
+  background-color: white;
+}
 .app-topbar {
   background-color: white;
   border-bottom: 1px solid grey;
@@ -19,24 +22,26 @@
   text-align: left;
   margin-left: 20px;
 }
-#inputcontainer {
+#chatContainer {
+  bottom: 44px;
+  left: 0;
+  right: 0;
+  margin-bottom: 10px;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+}
+#inputContainer {
   border-top: 1px solid #BDBDBD;
   bottom: 0;
   display: table;
   left: 0;
-  position: fixed;
+  right: 0;
+  position: absolute;
   width: 100%;
   &>* {
     display: table-cell;
   }
-}
-.chatContainer {
-  background-color: white;
-  bottom: 44px;
-  left: 0;
-  right: 0;
-  position: absolute;
-  top: 0;
 }
 .message {
   &-container {
@@ -95,4 +100,10 @@
 }
 .u-colorGray {
   color: gray;
+}
+.u-table {
+  display: table;
+}
+.u-tableRow {
+  display: table-row;
 }
