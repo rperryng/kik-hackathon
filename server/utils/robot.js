@@ -66,17 +66,17 @@ var robot = module.exports = function (message, session) {
       session.pizzas[session.pizzas.length - 1].toppings = ['cheese'];
 
       var regexpTopics = {
-        '\bpepp?ero\b': 'pepperoni',
-        '\bbaco': 'bacon',
-        '\bbeef': 'beef',
-        '\bsteak': 'steak',
-        '\bpepp?er': 'peppers',
-        '\bolive': 'olive',
-        '\bancho': 'anchovies',
-        '\bmush': 'mushrooms',
-        '\bsaus': 'sausage',
-        '\bpinn?(a|e)pele|pinea': 'pineapple',
-        '\bchick': 'chicken'
+        'pepp?ero': 'pepperoni',
+        'baco': 'bacon',
+        'beef': 'beef',
+        'steak': 'steak',
+        'pepp?ers?\b': 'bell peppers',
+        'olive': 'olive',
+        'ancho': 'anchovies',
+        'mush': 'mushrooms',
+        'saus': 'sausage',
+        'pinn?(a|e)pele|pinea': 'pineapple',
+        'chick': 'chicken'
       };
 
       Object.keys(regexpTopics).forEach(function(key) {
