@@ -27,3 +27,6 @@ bower_components
 
 # files built with gulp
 client/dist
+
+# secrets
+config.json
