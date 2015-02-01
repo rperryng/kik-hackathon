@@ -26,3 +26,7 @@ chatApp.post('/chat', function (req, res, next) {
     body: replyString
   });
 });
+
+chatApp.get('/chat', function (req, res) {
+  
+});
