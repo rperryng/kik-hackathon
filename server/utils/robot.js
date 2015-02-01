@@ -66,11 +66,17 @@ var robot = module.exports = function (message, session) {
       session.pizzas[session.pizzas.length - 1].toppings = ['cheese'];
 
       var regexpTopics = {
-        'pepp?ero': 'pepperoni',
-        'mush': 'mushrooms',
-        'saus': 'sausage',
-        'pinnopele|pinea': 'pineapple',
-        'chick': 'chicken'
+        '\bpepp?ero\b': 'pepperoni',
+        '\bbaco': 'bacon',
+        '\bbeef': 'beef',
+        '\bsteak': 'steak',
+        '\bpepp?er': 'peppers',
+        '\bolive': 'olive',
+        '\bancho': 'anchovies',
+        '\bmush': 'mushrooms',
+        '\bsaus': 'sausage',
+        '\bpinn?(a|e)pele|pinea': 'pineapple',
+        '\bchick': 'chicken'
       };
 
       Object.keys(regexpTopics).forEach(function(key) {
@@ -110,9 +116,9 @@ var robot = module.exports = function (message, session) {
       session.state = 9;
       break;
     case 9: //summary and confirm
-      if (/\bye|^y$/i.test(message)) {
+      if (/\^y$|\by[aeiu]\w{1,4}\b/i.test(message)) {
         session.state = 10;
-      } else if (/\bn|^n$/i.test(message)) {
+      } else if (/\^n$|\bno*[aeiou]\w{1,4}\b/i.test(message)) {
         session.state = 99;
       } else {
         return false;

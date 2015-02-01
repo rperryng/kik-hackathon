@@ -43,7 +43,7 @@
 
           function pretendBotIsTyping() {
             vm.botIsTyping = true;
-            $timeout(printMessage, DELAY_TIME);
+            $timeout(printMessage, 20 * response.data.body.length);
           }
 
           function printMessage() {

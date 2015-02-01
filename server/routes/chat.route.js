@@ -10,8 +10,9 @@ chatApp.post('/chat', function (req, res, next) {
   if (req.session === undefined || req.session.state === undefined) {
     req.session.state = 0;
     req.session.pizzas = [];
-  } else if (req.session.state == 99 || req.session.state == 10) {
-    session.destroy();
+  } else if (req.session.state == 99 || req.session.state == 10 || /\bexit|\bstop|\bquit/i.test(message.body)) {
+    req.session.destroy();
+    replyString = 'k.';
   } else {
     if (!robot(message.body, req.session)) {
       replyString = "Sorry! I'm not too smart yet. English is hard for someone that natively speaks binary.\nPlease try again! :(";
