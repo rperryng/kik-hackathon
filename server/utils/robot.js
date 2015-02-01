@@ -1,5 +1,5 @@
 var robot = module.exports = function (message, session) {
-  delete session.errorCode;
+  
   switch(session.state){
     case 0: // new order or previous order?
       if (message == 'new'){
@@ -7,15 +7,15 @@ var robot = module.exports = function (message, session) {
       } else if (message == 'previous'){
         session.state = 5;
       } else {
-        session.errorCode = 55; // do not understand input
+        return false; // do not understand input
       }
     break;
     case 1: // number of pizzas?
-      if (message >= 1){
+      if (Number(message) >= 1){
         session.numPizzas = message;
         session.state = 2;
       } else {
-        session.errorCode = 55;
+        return false;
       }
     break;
     case 2: // size of pizza?
@@ -23,7 +23,7 @@ var robot = module.exports = function (message, session) {
         session.pizzas.push({size: message});
         session.state = 3;
       } else {
-        session.errorCode = 55;
+        return false;
       }
     break;
     case 3: // type of pizza
@@ -45,7 +45,7 @@ var robot = module.exports = function (message, session) {
         //custom pizza
         session.state = 4;
       } else {
-        session.errorCode = 55;
+        return false;
       }
     break;
     case 4: // custom toppings
@@ -62,10 +62,10 @@ var robot = module.exports = function (message, session) {
       if (message == 'new'){
         session.state = 1;
       } else if (message >= 1 && message <= 3) { 
-        session.pizzas = session.previousOrders[message - 1].pizzas;       
+        session.pizzas = session.previousOrders[message - 1].pizzas;
         session.state = 6; 
       } else {
-        session.errorCode = 55;
+        return false;
       }
     break;
     case 6: // pickup (1) or delivery (2)?
@@ -76,7 +76,7 @@ var robot = module.exports = function (message, session) {
         session.orderType = 2;
         session.state = 7;
       } else {
-        session.errorCode = 55;
+        return false;
       }
     break;
     case 7: // address
@@ -93,17 +93,9 @@ var robot = module.exports = function (message, session) {
       } else if (message == 'no') {
         session.state = 99;
       } else {
-        session.errorCode = 55;
+        return false;
       }
     break;
   }
+  return true;
 };
-
-var message = 'pickp';
-var session = {
-  state: 6,
-  numPizzas: 1,
-  pizzas: [{}]
-};
-robot(message, session);
-console.log(session);

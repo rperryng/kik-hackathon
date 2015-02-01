@@ -8,19 +8,21 @@ var orderSchema = new Schema({
   fullName: String,
   orderType: Number,
   pizzas: [{
-  	size: String,
-  	toppings: [String],
-  	price: Number
+    size: String,
+    toppings: [String],
+    price: Number
   }],
   created: {
     type: Date,
     default: Date.now
-  }
+  },
   dueTime: {
     type: Date,
     default: Date.now
-  } 
+  },
   address: String,
   confirmationNum: Number,
   
 });
+
+module.exports = mongoose.model('Order', orderSchema);
