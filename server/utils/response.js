@@ -11,7 +11,6 @@ module.exports =  {
       var strings =responses[session.state].split('_');
       return strings[0] + '\n'
         + "Type: " + (session.orderType - 1 ? "Delivery": "Pickup")  + '.\n'
-        + "Pizzas: " + '\n'
         + listPizzas(session)
         + listAddress(session)
         + strings[1];
@@ -23,7 +22,7 @@ module.exports =  {
 function listPizzas (session) {
   var pizzaList = "";
   for ( var i = 0; i < session.pizzas.length; i++){
-    pizzaList += i+1 +" " + session.pizzas[i].size + " (" + session.pizzas[i].toppings.join(', ') + ").\n"
+    pizzaList += i+1 +". " + session.pizzas[i].size + " (" + session.pizzas[i].toppings.join(', ') + ").\n"
   }
   return pizzaList;
 }
@@ -39,9 +38,9 @@ var responses = [
   // State 1
   "Awesome! How many pizzas would you like?",
   // State 2
-  "What size do you want for pizza _?",
+  "Got it! What size do you want pizza _ to be?",
   // State 3
-  "Would you like a cheese, pepperoni, hawaiian or custom pizza for pizza _?",
+  "Okay, would you like a cheese, pepperoni, hawaiian or custom pizza for pizza _?",
   // State 4
   "What toppings would you like to add to pizza _? Btw, cheese is already included!",
   // State 5

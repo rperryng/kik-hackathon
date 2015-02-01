@@ -2,16 +2,16 @@ var robot = module.exports = function (message, session) {
 
   switch (session.state) {
     case 0: // new order or previous order?
-      if (/\bn+e+w/i.test(message)) {
+      if (/\bn+e+w/i.test(message)) { // new
         session.state = 1;
-      } else if (/prev|last|redo/i.test(message)) {
+      } else if (/prev|last|redo/i.test(message)) { // previous
         session.state = 5;
       } else {
         return false; // do not understand input
       }
       break;
     case 1: // number of pizzas?
-      if (/\b\d+\b/i.test(message)) {
+      if (/\b\d+\b/i.test(message)) { // look for numbers
         session.numPizzas = /\b\d+\b/i.exec(message)[0];
         session.state = 2;
       } else {
@@ -20,11 +20,11 @@ var robot = module.exports = function (message, session) {
       break;
     case 2: // size of pizza?
       var size;
-      if (/\bsmall|^s$|^sm$/i.test(message)) {
+      if (/\bsmall|^s$|\bsm\b/i.test(message)) { // small
         size = 'small';
-      } else if (/\bm\b|\bmed/i.test(message)) {
+      } else if (/\bm\b|\bmed/i.test(message)) { // medium
         size = 'medium';
-      } else if (/\blarge|^l$|^lg$/i.test(message)) {
+      } else if (/\blarge|^l$|\blg\b/i.test(message)) { // large
         size = 'large';
       }
 
@@ -37,24 +37,26 @@ var robot = module.exports = function (message, session) {
       });
       break;
     case 3: // type of pizza
+      if (/ch/i.test(message)) { // cheese
+        session.pizzas[session.pizzas.length - 1].toppings = ['cheese'];
+      } else if (/pep/i.test(message)) { // pepperoni
+        session.pizzas[session.pizzas.length - 1].toppings = ['cheese', 'pepperoni'];
+      } else if (/hawa/i.test(message)) { // hawaiian
+        session.pizzas[session.pizzas.length - 1].toppings = ['cheese', 'ham', 'pineapple', 'bacon'];
+      } else if (/custom/i.test(message)) { // custom
+        //custom pizza
+        session.state = 4;
+        return true;
+      } else {
+        return false;
+      }
+
       if (session.pizzas.length == session.numPizzas) {
         session.state = 6;
       } else if (session.pizzas.length < session.numPizzas) {
         session.state = 2;
       }
-
-      if (/ch/i.test(message)) {
-        session.pizzas[session.pizzas.length - 1].toppings = ['cheese'];
-      } else if (/pep/i.test(message)) {
-        session.pizzas[session.pizzas.length - 1].toppings = ['cheese', 'pepperoni'];
-      } else if (/hawa/i.test(message)) {
-        session.pizzas[session.pizzas.length - 1].toppings = ['cheese', 'ham', 'pineapple', 'bacon'];
-      } else if (/custom/i.test(message)) {
-        //custom pizza
-        session.state = 4;
-      } else {
-        return false;
-      }
+ 
       break;
     case 4: // custom toppings
       if (session.pizzas.length == session.numPizzas) {
@@ -87,7 +89,7 @@ var robot = module.exports = function (message, session) {
       });
       break;
     case 5: // choose 1/3 previous or go back to new order
-      if (/\bne+w/i.test(message)) {
+      if (/\bne+w/i.test(message)) { // new
         session.state = 1;
       } else if (message >= 1 && message <= 3) {
         session.pizzas = session.previousOrders[message - 1].pizzas;
@@ -100,7 +102,7 @@ var robot = module.exports = function (message, session) {
       if (/pick|take/i.test(message)) {
         session.orderType = 1;
         session.state = 8;
-      } else if (/\bdeliv/i.test(message)) {
+      } else if (/\bdeliv/i.test(message)) { // delivery 
         session.orderType = 2;
         session.state = 7;
       } else {
@@ -116,9 +118,9 @@ var robot = module.exports = function (message, session) {
       session.state = 9;
       break;
     case 9: //summary and confirm
-      if (/\^y$|\by[aeiu]\w{1,4}\b/i.test(message)) {
+      if (/\^y$|\by[aeiu]\w{1,4}\b/i.test(message)) { // yes ya yup etc
         session.state = 10;
-      } else if (/\^n$|\bno*[aeiou]\w{1,4}\b/i.test(message)) {
+      } else if (/\^n$|\bno*[aeiou]\w{1,4}\b/i.test(message)) { // nooooo no nope nah etc
         session.state = 99;
       } else {
         return false;
