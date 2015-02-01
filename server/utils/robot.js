@@ -2,7 +2,7 @@ var robot = module.exports = function (message, session) {
 
   switch (session.state) {
     case 0: // new order or previous order?
-      if (/new/i.test(message)) {
+      if (/\bn+e+w/i.test(message)) {
         session.state = 1;
       } else if (/prev|last|redo/i.test(message)) {
         session.state = 5;
@@ -12,7 +12,7 @@ var robot = module.exports = function (message, session) {
       break;
     case 1: // number of pizzas?
       if (/\b\d+\b/i.test(message)) {
-        session.numPizzas = message;
+        session.numPizzas = /\b\d+\b/i.exec(message)[0];
         session.state = 2;
       } else {
         return false;
@@ -20,11 +20,11 @@ var robot = module.exports = function (message, session) {
       break;
     case 2: // size of pizza?
       var size;
-      if (/small|^s$|^sm$/i.test(message)) {
+      if (/\bsmall|^s$|^sm$/i.test(message)) {
         size = 'small';
-      } else if (/medium|^m$|^med$/i.test(message)) {
+      } else if (/\bm\b|\bmed/i.test(message)) {
         size = 'medium';
-      } else if (/large|^l$|^lg$/i.test(message)) {
+      } else if (/\blarge|^l$|^lg$/i.test(message)) {
         size = 'large';
       }
 
@@ -43,14 +43,13 @@ var robot = module.exports = function (message, session) {
         session.state = 2;
       }
 
-      // if (message == 'cheese') {
-      if (/ch/i.match(message)) {
+      if (/ch/i.test(message)) {
         session.pizzas[session.pizzas.length - 1].toppings = ['cheese'];
-      } else if (/pep/i.match(message)) {
+      } else if (/pep/i.test(message)) {
         session.pizzas[session.pizzas.length - 1].toppings = ['cheese', 'pepperoni'];
-      } else if (/hawa/i.match(message)) {
+      } else if (/hawa/i.test(message)) {
         session.pizzas[session.pizzas.length - 1].toppings = ['cheese', 'ham', 'pineapple', 'bacon'];
-      } else if (/custom/i.match(message)) {
+      } else if (/custom/i.test(message)) {
         //custom pizza
         session.state = 4;
       } else {
@@ -82,7 +81,7 @@ var robot = module.exports = function (message, session) {
       });
       break;
     case 5: // choose 1/3 previous or go back to new order
-      if (message == 'new') {
+      if (/\bne+w/i.test(message)) {
         session.state = 1;
       } else if (message >= 1 && message <= 3) {
         session.pizzas = session.previousOrders[message - 1].pizzas;
@@ -92,10 +91,10 @@ var robot = module.exports = function (message, session) {
       }
       break;
     case 6: // pickup (1) or delivery (2)?
-      if (message == 'pickup') {
+      if (/pick|take/i.test(message)) {
         session.orderType = 1;
         session.state = 8;
-      } else if (message == 'delivery') {
+      } else if (/\bdeliv/i.test(message)) {
         session.orderType = 2;
         session.state = 7;
       } else {
@@ -111,9 +110,9 @@ var robot = module.exports = function (message, session) {
       session.state = 9;
       break;
     case 9: //summary and confirm
-      if (message == 'yes') {
+      if (/\bye|^y$/i.test(message)) {
         session.state = 10;
-      } else if (message == 'no') {
+      } else if (/\bn|^n$/i.test(message)) {
         session.state = 99;
       } else {
         return false;
